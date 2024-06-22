@@ -36,19 +36,14 @@ export function App() {
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[330px_1fr] lg:grid-cols-[280px_1fr]">
-      <div className="border-r bg-muted/40 block">
+      <div className="border-r bg-muted/40">
         <div className="flex h-full max-h-screen flex-col">
-          <div className="flex h-14 bg-muted justify-between items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <a
-              href="/Users/salmen/Projects/nx/demos/ui-components/chatgpt-ui/public"
-              className="flex items-center gap-2 font-semibold"
-            >
-              <Avatar className="w-8 h-8">
-                <AvatarImage src={"https://github.com/franciscoMoretti.png"} />
-                <AvatarFallback>F</AvatarFallback>
-              </Avatar>
-              <span>Chat app</span>
-            </a>
+          <div className="flex h-16 gap-4 bg-muted justify-start  items-center border-b px-4 lg:h-[60px] lg:px-6">
+            <Avatar>
+              <AvatarImage src={"https://github.com/franciscoMoretti.png"} />
+              <AvatarFallback>F</AvatarFallback>
+            </Avatar>
+            <h1 className="text-xl">Chat app</h1>
           </div>
           <div className="flex-1">
             <nav className="grid items-start text-sm font-medium ">
@@ -92,7 +87,7 @@ export function App() {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-16 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
           <div className="w-full flex-1">
             <div className="relative flex gap-3 items-center">
               <AssistantAvatar
@@ -104,7 +99,6 @@ export function App() {
                   conversations[conversationIndex].personas.assistant
                     ?.name as string
                 }
-                className="w-8 h-8"
               />
 
               <div>
@@ -164,7 +158,7 @@ function ThemeToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
+        <Button variant="ghost" size="icon">
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>
