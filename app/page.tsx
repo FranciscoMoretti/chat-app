@@ -19,6 +19,7 @@ import "@nlux/themes/nova.css";
 import { conversationStarters } from "@/data/conversation-starters";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
+import { GithubIcon } from "@/components/github-icon";
 
 function LastMessageSummary({ chat }: { chat: ChatItem[] }) {
   const lastMessage = chat?.findLast((item) => item.message)?.message || "";
@@ -43,7 +44,7 @@ export function App() {
               <AvatarImage src={"https://github.com/franciscoMoretti.png"} />
               <AvatarFallback>F</AvatarFallback>
             </Avatar>
-            <h1 className="text-xl">Chat app</h1>
+            <h1 className="text-xl">Chat App</h1>
           </div>
           <div className="flex-1">
             <nav className="grid items-start text-sm font-medium ">
@@ -83,6 +84,14 @@ export function App() {
                 </>
               ))}
             </nav>
+          </div>
+          <div className="h-16 w-full px-4 bg-muted flex items-center justify-start">
+            {/* Github repo */}
+            <a href="https://github.com/franciscoMoretti/chat-app">
+              <Button variant="ghost" size={"icon"}>
+                <GithubIcon className="h-6 w-6" />
+              </Button>
+            </a>
           </div>
         </div>
       </div>
