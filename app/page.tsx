@@ -2,8 +2,6 @@
 import {AiChat, ChatAdapter, StreamingAdapterObserver} from '@nlux/react';
 import '@nlux/themes/nova.css';
 
-
-
 export default function Chat() {
     const chatAdapter: ChatAdapter = { 
       
@@ -34,7 +32,6 @@ export default function Chat() {
             }
       
             const content = textDecoder.decode(value);
-            console.log(content, value)
             if (content) {
               observer.next(content);
             }
@@ -47,12 +44,7 @@ export default function Chat() {
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
             <div className="z-10 w-full max-w-3xl items-center justify-between font-mono text-sm lg:flex">
-                <AiChat
-                
-                messageOptions={
-                  {streamingAnimationSpeed: 5}
-                }
-                className='bg-green-500 ' adapter={chatAdapter}/>
+                <AiChat adapter={chatAdapter}/>
             </div>
         </main>
     );
