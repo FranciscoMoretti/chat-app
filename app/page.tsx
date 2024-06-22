@@ -18,13 +18,14 @@ import { AiChat, ChatItem } from "@nlux/react";
 import "@nlux/themes/nova.css";
 import { conversationStarters } from "@/data/conversation-starters";
 import { Separator } from "@/components/ui/separator";
+import { formatDate } from "@/lib/utils";
 
 function LastMessageSummary({ chat }: { chat: ChatItem[] }) {
   const lastMessage = chat?.findLast((item) => item.message)?.message || "";
 
   return (
-    <p className="text-xs font-normal text-muted-foreground">
-      {lastMessage.length > 40 ? lastMessage.slice(0, 37) + "..." : lastMessage}
+    <p className="text-sm font-normal text-muted-foreground">
+      {lastMessage.length > 37 ? lastMessage.slice(0, 34) + "..." : lastMessage}
     </p>
   );
 }
@@ -37,7 +38,7 @@ export function App() {
     <div className="grid min-h-screen w-full md:grid-cols-[330px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="border-r bg-muted/40 block">
         <div className="flex h-full max-h-screen flex-col">
-          <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <div className="flex h-14 bg-muted justify-between items-center border-b px-4 lg:h-[60px] lg:px-6">
             <a
               href="/Users/salmen/Projects/nx/demos/ui-components/chatgpt-ui/public"
               className="flex items-center gap-2 font-semibold"
@@ -59,19 +60,27 @@ export function App() {
                       index === conversationIndex
                         ? "!bg-secondary"
                         : "bg-transparent"
-                    } flex items-center h-[70px] gap-3 px-3 py-2 transition-all hover:text-primary cursor-pointer hover:bg-secondary `}
+                    } flex items-center h-20 gap-3 px-3 py-2 transition-all hover:text-primary cursor-pointer hover:bg-secondary `}
                     onClick={() => setConversationIndex(index)}
                   >
                     <AssistantAvatar
                       avatar={conversation.personas.assistant?.avatar as string}
                       name={conversation.personas.assistant?.name as string}
                     />
-                    <div>
-                      <h2 className="text-lg font-semibold">
-                        {conversation.personas.assistant?.name}
-                      </h2>
+                    <div className="flex flex-col w-full gap-0.5">
+                      <div className="flex justify-between w-full items-center">
+                        <h2 className="text-lg font-semibold">
+                          {conversation.personas.assistant?.name}
+                        </h2>
+                        <p className="text-xs font-normal text-muted-foreground">
+                          {formatDate(
+                            conversation.chat?.findLast((item) => item.message)
+                              ?.timestamp as Date
+                          )}
+                        </p>
+                      </div>
                       <LastMessageSummary
-                        chat={conversation.chat}
+                        chat={conversation.chat as ChatItem[]}
                       ></LastMessageSummary>
                     </div>
                   </a>
@@ -83,7 +92,7 @@ export function App() {
         </div>
       </div>
       <div className="flex flex-col">
-        <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+        <header className="flex h-14 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
           <div className="w-full flex-1">
             <div className="relative flex gap-3 items-center">
               <AssistantAvatar
