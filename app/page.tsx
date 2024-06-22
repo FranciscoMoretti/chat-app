@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
@@ -29,12 +29,15 @@ export function App() {
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <a href="/Users/salmen/Projects/nx/demos/ui-components/chatgpt-ui/public" className="flex items-center gap-2 font-semibold">
-              <Avatar className="rounded-none w-6 h-6">
-                <AvatarImage src={"./nlux.png"} />
-                <AvatarFallback>Nlux</AvatarFallback>
+            <a
+              href="/Users/salmen/Projects/nx/demos/ui-components/chatgpt-ui/public"
+              className="flex items-center gap-2 font-semibold"
+            >
+              <Avatar className="w-6 h-6">
+                <AvatarImage src={"https://github.com/franciscoMoretti.png"} />
+                <AvatarFallback>F</AvatarFallback>
               </Avatar>
-              <span>Your AI Assistant</span>
+              <span>Chat app</span>
             </a>
           </div>
           <div className="flex-1">
@@ -68,7 +71,11 @@ export function App() {
         <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
           <Sheet>
             <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="shrink-0 md:hidden">
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0 md:hidden"
+              >
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle navigation menu</span>
               </Button>
@@ -95,36 +102,29 @@ export function App() {
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
-            <form>
-              <div className="relative flex">
-                <DropdownMenu>
-                  <DropdownMenuTrigger id="model" className="flex gap-3 border items-start p-2 rounded-sm">
-                    <img src={models[selectedModelIndex].icon} className="w-6 h-6 object-scale-down"/>
-                    {models[selectedModelIndex].modelName}
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                  {models.map((val, index) => (
-                      <DropdownMenuItem
-                        key={`models-${val.modelName}`}
-                        className="z-[999989]"
-                        onClick={() => setSelectedModelIndex(index)}
-                      >
-                        <div className="flex items-center gap-3 text-muted-foreground cursor-pointer z-auto">
-                          <img src={val.icon} className="w-6 h-6 object-scale-down" />
-                          <div className="grid gap-0.5">
-                            <span className="flex gap-1 items-center">
-                              <p className=" font-medium text-foreground">{val.modelName}</p>
-                              {index === selectedModelIndex && <Check />}
-                            </span>
-                            <p className="text-xs">{val.description}</p>
-                          </div>
-                        </div>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
+            <div className="relative flex gap-3 items-center">
+              <Avatar className="w-8 h-8">
+                <AvatarImage
+                  src={
+                    conversations[conversationIndex].personas.assistant
+                      ?.avatar as string
+                  }
+                />
+                <AvatarFallback>
+                  {conversations[
+                    conversationIndex
+                  ].personas.assistant?.name.slice(0, 2)}
+                </AvatarFallback>
+              </Avatar>
+              <div>
+                <h2 className="text-lg font-semibold">
+                  {conversations[conversationIndex].personas.assistant?.name}
+                </h2>
+                <p className="text-xs font-normal text-muted-foreground">
+                  {conversations[conversationIndex].personas.assistant?.tagline}
+                </p>
               </div>
-            </form>
+            </div>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
