@@ -22,7 +22,6 @@ import { conversationStarters } from "@/data/conversation-starters";
 export function App() {
   const { setTheme, theme } = useTheme();
   const [conversationIndex, setConversationIndex] = useState(0);
-  const [selectedModelIndex, setSelectedModelIndex] = useState(0);
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -153,7 +152,7 @@ export function App() {
         <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
           <AiChat
             className="nlux-AiChat-style"
-            adapter={models[selectedModelIndex].adapter()}
+            adapter={models[0].adapter()}
             composerOptions={{ placeholder: "How can I help you today?" }}
             initialConversation={conversations[conversationIndex].chat}
             displayOptions={{ colorScheme: theme }}
