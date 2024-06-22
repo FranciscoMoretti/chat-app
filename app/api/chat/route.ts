@@ -1,6 +1,5 @@
 import { openai } from '@ai-sdk/openai';
-import { generateText } from 'ai';
-import {NextResponse} from 'next/server';
+import { streamText } from 'ai';
 
 // Allow streaming responses up to 30 seconds
 export const maxDuration = 30;
@@ -8,13 +7,17 @@ export const maxDuration = 30;
 export async function POST(req: Request) {
     const { prompt } = await req.json();
 
-    const result = await generateText({
+    const result = await streamText({
         model: openai('gpt-4-turbo'),
         messages: [{
             role: 'system',
             content: prompt,
-        }]
+        }],
+        async onFinish({ text, toolCalls, toolResults, usage, finishReason }) {
+            // implement your own logic here, e.g. for storing messages
+            // or recording token usage
+        },
     });
 
-    return NextResponse.json({ reply: result.responseMessages[0].content[0].text });
+    return result.toTextStreamResponse();
 }

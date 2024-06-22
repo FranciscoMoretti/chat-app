@@ -1,19 +1,48 @@
 'use client';
-import {AiChat, ChatAdapter} from '@nlux/react';
+import {AiChat, ChatAdapter, StreamingAdapterObserver} from '@nlux/react';
 import '@nlux/themes/nova.css';
+
+
 
 export default function Chat() {
     const chatAdapter: ChatAdapter = { 
       
-      batchText: async (prompt: string) => {
+      streamText: async (prompt: string, observer: StreamingAdapterObserver) => {
         const response = await fetch('/api/chat', {
             method: 'POST',
             body: JSON.stringify({prompt: prompt}),
             headers: {'Content-Type': 'application/json'},
         });
-        const {reply} = await response.json();
-        return reply;
-    }};
+        if (response.status !== 200) {
+            observer.error(new Error('Failed to connect to the server'));
+            return;
+          }
+      
+          if (!response.body) {
+            return;
+          }
+      
+          // Read a stream of server-sent events
+          // and feed them to the observer as they are being generated
+          const reader = response.body.getReader();
+          const textDecoder = new TextDecoder();
+      
+          while (true) {
+            const { value, done } = await reader.read();
+            if (done) {
+              break;
+            }
+      
+            const content = textDecoder.decode(value);
+            console.log(content, value)
+            if (content) {
+              observer.next(content);
+            }
+          }
+      
+          observer.complete();
+        }
+    }
 
     return (
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
