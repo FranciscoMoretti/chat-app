@@ -59,7 +59,7 @@ export const conversations: {
         message:
           "Yarrr! The **fastest** land animal be the mighty `cheetah`! It zooms across the savannah like a cannonball from a pirate ship!",
 
-        timestamp: new Date("2020-01-01 00:00:00"),
+        timestamp: new Date(new Date().setDate(new Date().getDate() - 1)),
       },
     ],
   },
@@ -85,7 +85,7 @@ export const conversations: {
           "5. **Energy Storage**: The glucose is used by the plant for energy and growth. It can also be stored as starch for later use.\n" +
           "\n" +
           "Plants are essential for life on Earth, as they produce oxygen and provide the foundation for most food chains.\n",
-        timestamp: new Date(new Date().setDate(new Date().getDate() - 1)),
+        timestamp: new Date("2020-01-01 00:00:00"),
       },
     ],
   },
