@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,7 +11,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Check, Menu, Moon, Sun, Monitor } from "lucide-react";
 
-import { conversations } from "@/data/history";
+import { Conversation, conversations } from "@/data/history";
 import { models } from "@/data/models";
 
 import { AiChat, ChatItem } from "@nlux/react";
@@ -31,9 +31,36 @@ function LastMessageSummary({ chat }: { chat: ChatItem[] }) {
   );
 }
 
+function sortConversationsByLastMessageDate(
+  conversations: Conversation[]
+): Conversation[] {
+  return conversations.sort((a, b) => {
+    const lastTimestampA = getConversationLastTimestamp(a);
+    const lastTimestampB = getConversationLastTimestamp(b);
+    // Handle the case where both conversations have no messages
+    if (!lastTimestampA && !lastTimestampB) {
+      return 0;
+    }
+    // Handle the case where only one conversation has no messages
+    if (!lastTimestampA) {
+      return 1;
+    }
+    if (!lastTimestampB) {
+      return -1;
+    }
+    return lastTimestampB?.getTime() - lastTimestampA?.getTime();
+  });
+}
+
 export function App() {
   const { theme } = useTheme();
   const [conversationIndex, setConversationIndex] = useState(0);
+
+  // Sort conversations by last message date
+  const sortedConversations = useMemo(
+    () => sortConversationsByLastMessageDate(conversations),
+    [conversations]
+  );
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[330px_1fr] lg:grid-cols-[280px_1fr]">
@@ -48,7 +75,7 @@ export function App() {
           </div>
           <div className="flex-1">
             <nav className="grid items-start text-sm font-medium ">
-              {conversations.map((conversation, index) => (
+              {sortedConversations.map((conversation, index) => (
                 <>
                   <a
                     key={`conversation-${conversation.title}`}
@@ -70,8 +97,7 @@ export function App() {
                         </h2>
                         <p className="text-xs font-normal text-muted-foreground">
                           {formatDate(
-                            conversation.chat?.findLast((item) => item.message)
-                              ?.timestamp as Date
+                            getConversationLastTimestamp(conversation) as Date
                           )}
                         </p>
                       </div>
@@ -139,6 +165,12 @@ export function App() {
 }
 
 export default App;
+function getConversationLastTimestamp(
+  conversation: Conversation
+): Date | undefined {
+  return conversation.chat?.findLast((item) => item.message)?.timestamp;
+}
+
 function AssistantAvatar({
   avatar,
   name,

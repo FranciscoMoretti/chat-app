@@ -1,12 +1,16 @@
 import { personas } from "./personas.ts";
 import { ChatItem, PersonaOptions } from "@nlux/react";
 
-export const conversations: {
+export type Conversation = {
   id: string;
   title: string;
   personas: PersonaOptions;
-  chat?: (ChatItem & { timestamp: Date })[];
-}[] = [
+  chat?: (ChatItem & {
+    timestamp: Date;
+  })[];
+};
+
+export const conversations: Conversation[] = [
   {
     id: "cnv-2",
     title: "Cooking Recipes",
@@ -40,7 +44,7 @@ export const conversations: {
           "3. **Combine**: Toss spaghetti with sauce. Top with Parmesan and basil if desired.\n" +
           "\n" +
           "Enjoy your meal!\n",
-        timestamp: new Date(Date.now()),
+        timestamp: new Date(new Date().setDate(new Date().getDate() - 1)),
       },
     ],
   },
@@ -59,7 +63,7 @@ export const conversations: {
         message:
           "Yarrr! The **fastest** land animal be the mighty `cheetah`! It zooms across the savannah like a cannonball from a pirate ship!",
 
-        timestamp: new Date(new Date().setDate(new Date().getDate() - 1)),
+        timestamp: new Date(Date.now()),
       },
     ],
   },
