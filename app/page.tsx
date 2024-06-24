@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Check, Menu, Moon, Sun, Monitor } from "lucide-react";
+import { Check, Search, Moon, Sun, Monitor } from "lucide-react";
 
 import { Conversation, conversations } from "@/data/history";
 import { models } from "@/data/models";
@@ -20,6 +20,7 @@ import { conversationStarters } from "@/data/conversation-starters";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
 import { GithubIcon } from "@/components/github-icon";
+import { Input } from "@/components/ui/input";
 
 function LastMessageSummary({ chat }: { chat: ChatItem[] }) {
   const lastMessage = chat?.findLast((item) => item.message)?.message || "";
@@ -71,7 +72,9 @@ export function App() {
   const filteredConversations = useMemo(
     () =>
       sortedConversations.filter((conversation) =>
-        conversation.title.toLowerCase().includes(query.toLowerCase())
+        conversation.personas.assistant?.name
+          .toLowerCase()
+          .includes(query.toLowerCase())
       ),
     [sortedConversations, query]
   );
@@ -89,9 +92,19 @@ export function App() {
             </Avatar>
             <h1 className="text-xl">Chat App</h1>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 w-full">
+            <div className="relative m-2">
+              <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="search"
+                placeholder="Search..."
+                className="w-full rounded-lg bg-background pl-8"
+                onChange={(e) => setQuery(e.target.value)}
+                value={query}
+              />
+            </div>
             <nav className="grid items-start text-sm font-medium ">
-              {sortedConversations.map((conversation, index) => (
+              {finalConversations.map((conversation, index) => (
                 <>
                   <a
                     key={`conversation-${conversation.title}`}
