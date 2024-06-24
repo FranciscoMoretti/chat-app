@@ -54,13 +54,29 @@ function sortConversationsByLastMessageDate(
 
 export function App() {
   const { theme } = useTheme();
-  const [conversationIndex, setConversationIndex] = useState(0);
+  const [query, setQuery] = useState("");
 
   // Sort conversations by last message date
   const sortedConversations = useMemo(
     () => sortConversationsByLastMessageDate(conversations),
     [conversations]
   );
+  const [currentConversationId, setCurrentConversationId] =
+    useState<string>("");
+
+  const currentConversation = sortedConversations.find(
+    (conversation) => conversation.id === currentConversationId
+  );
+
+  const filteredConversations = useMemo(
+    () =>
+      sortedConversations.filter((conversation) =>
+        conversation.title.toLowerCase().includes(query.toLowerCase())
+      ),
+    [sortedConversations, query]
+  );
+
+  const finalConversations = filteredConversations;
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[330px_1fr] lg:grid-cols-[280px_1fr]">
@@ -80,11 +96,11 @@ export function App() {
                   <a
                     key={`conversation-${conversation.title}`}
                     className={`${
-                      index === conversationIndex
+                      conversation.id == currentConversationId
                         ? "!bg-secondary"
                         : "bg-transparent"
                     } flex items-center h-20 gap-3 px-3 py-2 transition-all hover:text-primary cursor-pointer hover:bg-secondary `}
-                    onClick={() => setConversationIndex(index)}
+                    onClick={() => setCurrentConversationId(conversation.id)}
                   >
                     <AssistantAvatar
                       avatar={conversation.personas.assistant?.avatar as string}
@@ -121,45 +137,47 @@ export function App() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col">
-        <header className="flex h-16 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
-          <div className="w-full flex-1">
-            <div className="relative flex gap-3 items-center">
-              <AssistantAvatar
-                avatar={
-                  conversations[conversationIndex].personas.assistant
-                    ?.avatar as string
-                }
-                name={
-                  conversations[conversationIndex].personas.assistant
-                    ?.name as string
-                }
-              />
+      {currentConversation ? (
+        <div className="flex flex-col">
+          <header className="flex h-16 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
+            <div className="w-full flex-1">
+              <div className="relative flex gap-3 items-center">
+                <AssistantAvatar
+                  avatar={
+                    currentConversation.personas.assistant?.avatar as string
+                  }
+                  name={currentConversation.personas.assistant?.name as string}
+                />
 
-              <div>
-                <h2 className="text-lg font-semibold">
-                  {conversations[conversationIndex].personas.assistant?.name}
-                </h2>
-                <p className="text-xs font-normal text-muted-foreground">
-                  {conversations[conversationIndex].personas.assistant?.tagline}
-                </p>
+                <div>
+                  <h2 className="text-lg font-semibold">
+                    {currentConversation.personas.assistant?.name}
+                  </h2>
+                  <p className="text-xs font-normal text-muted-foreground">
+                    {currentConversation.personas.assistant?.tagline}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-          <ThemeToggle />
-        </header>
-        <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-          <AiChat
-            className="nlux-AiChat-style"
-            adapter={models[0].adapter()}
-            composerOptions={{ placeholder: "How can I help you today?" }}
-            initialConversation={conversations[conversationIndex].chat}
-            displayOptions={{ colorScheme: theme }}
-            personaOptions={conversations[conversationIndex].personas}
-            conversationOptions={{ conversationStarters }}
-          />
-        </main>
-      </div>
+            <ThemeToggle />
+          </header>
+          <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
+            <AiChat
+              className="nlux-AiChat-style"
+              adapter={models[0].adapter()}
+              composerOptions={{ placeholder: "How can I help you today?" }}
+              initialConversation={currentConversation.chat}
+              displayOptions={{ colorScheme: theme }}
+              personaOptions={currentConversation.personas}
+              conversationOptions={{ conversationStarters }}
+            />
+          </main>
+        </div>
+      ) : (
+        <div className="flex flex-1 items-center justify-center text-2xl">
+          <p>Select an assistant to start chatting</p>
+        </div>
+      )}
     </div>
   );
 }
