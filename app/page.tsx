@@ -29,6 +29,7 @@ import { formatDate } from "@/lib/utils";
 import { GithubIcon } from "@/components/github-icon";
 import { Input } from "@/components/ui/input";
 import { produce } from "immer";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 function LastMessageSummary({ lastMessage }: { lastMessage: string }) {
   return (
@@ -153,7 +154,8 @@ export function App() {
             </Avatar>
             <h1 className="text-xl">Chat App</h1>
           </div>
-          <div className="flex-1 w-full">
+          {/* Height is calculated as screen height - header - footer */}
+          <ScrollArea className="flex-1 w-full h-[calc(100vh-64px-64px)]">
             <div className="relative m-2">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
@@ -203,7 +205,7 @@ export function App() {
                 </div>
               ))}
             </nav>
-          </div>
+          </ScrollArea>
           <div className="h-16 w-full px-4 bg-muted flex items-center justify-start">
             {/* Github repo */}
             <a href="https://github.com/franciscoMoretti/chat-app">

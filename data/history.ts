@@ -15,6 +15,38 @@ const USER = {
 
 export const conversationsHistory: Conversation[] = [
   {
+    id: "cnv-1",
+    personas: {
+      assistant: {
+        name: "AI Accountant",
+        tagline: "Your Genius AI Assistant",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/albert.png",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "How do plants make food?",
+        timestamp: new Date("2020-01-01 00:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Plants make food through a process called **photosynthesis**. Here's a brief overview of how it works:\n" +
+          "\n" +
+          "1. **Chlorophyll**: Plants have a green pigment called chlorophyll in their leaves, which captures light energy from the sun.\n" +
+          "2. **Water and Carbon Dioxide**: Plants take in water (H₂O) from the soil through their roots and carbon dioxide (CO₂) from the air through their leaves.\n" +
+          "3. **Photosynthesis Process**: Using the light energy, chlorophyll converts water and carbon dioxide into glucose (C₆H₁₂O₆), a type of sugar, and oxygen (O₂).\n" +
+          "4. **Oxygen Release**: The oxygen produced during photosynthesis is released into the air through the plant's leaves.\n" +
+          "5. **Energy Storage**: The glucose is used by the plant for energy and growth. It can also be stored as starch for later use.\n" +
+          "\n" +
+          "Plants are essential for life on Earth, as they produce oxygen and provide the foundation for most food chains.\n",
+        timestamp: new Date("2020-01-01 00:00:00"),
+      },
+    ],
+  },
+  {
     id: "cnv-2",
     personas: {
       assistant: {
@@ -82,38 +114,7 @@ export const conversationsHistory: Conversation[] = [
       },
     ],
   },
-  {
-    id: "cnv-4",
-    personas: {
-      assistant: {
-        name: "AI Accountant",
-        tagline: "Your Genius AI Assistant",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/albert.png",
-      },
-      user: USER,
-    },
-    chat: [
-      {
-        role: "user",
-        message: "How do plants make food?",
-        timestamp: new Date("2020-01-01 00:00:00"),
-      },
-      {
-        role: "assistant",
-        message:
-          "Plants make food through a process called **photosynthesis**. Here's a brief overview of how it works:\n" +
-          "\n" +
-          "1. **Chlorophyll**: Plants have a green pigment called chlorophyll in their leaves, which captures light energy from the sun.\n" +
-          "2. **Water and Carbon Dioxide**: Plants take in water (H₂O) from the soil through their roots and carbon dioxide (CO₂) from the air through their leaves.\n" +
-          "3. **Photosynthesis Process**: Using the light energy, chlorophyll converts water and carbon dioxide into glucose (C₆H₁₂O₆), a type of sugar, and oxygen (O₂).\n" +
-          "4. **Oxygen Release**: The oxygen produced during photosynthesis is released into the air through the plant's leaves.\n" +
-          "5. **Energy Storage**: The glucose is used by the plant for energy and growth. It can also be stored as starch for later use.\n" +
-          "\n" +
-          "Plants are essential for life on Earth, as they produce oxygen and provide the foundation for most food chains.\n",
-        timestamp: new Date("2020-01-01 00:00:00"),
-      },
-    ],
-  },
+
   {
     id: "cnv-4",
     personas: {
