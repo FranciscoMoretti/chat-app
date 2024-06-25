@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,20 +11,25 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Check, Search, Moon, Sun, Monitor } from "lucide-react";
 
-import { Conversation, conversations } from "@/data/history";
+import { Conversation, conversationsHistory } from "@/data/history";
 import { models } from "@/data/models";
 
-import { AiChat, ChatItem } from "@nlux/react";
+import {
+  AiChat,
+  ChatItem,
+  EventsConfig,
+  MessageReceivedCallback,
+  MessageSentCallback,
+} from "@nlux/react";
 import "@nlux/themes/nova.css";
 import { conversationStarters } from "@/data/conversation-starters";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
 import { GithubIcon } from "@/components/github-icon";
 import { Input } from "@/components/ui/input";
+import { produce } from "immer";
 
-function LastMessageSummary({ chat }: { chat: ChatItem[] }) {
-  const lastMessage = chat?.findLast((item) => item.message)?.message || "";
-
+function LastMessageSummary({ lastMessage }: { lastMessage: string }) {
   return (
     <p className="text-sm font-normal text-muted-foreground">
       {lastMessage.length > 37 ? lastMessage.slice(0, 34) + "..." : lastMessage}
@@ -35,7 +40,8 @@ function LastMessageSummary({ chat }: { chat: ChatItem[] }) {
 function sortConversationsByLastMessageDate(
   conversations: Conversation[]
 ): Conversation[] {
-  return conversations.sort((a, b) => {
+  const clone = conversations.slice();
+  return clone.sort((a, b) => {
     const lastTimestampA = getConversationLastTimestamp(a);
     const lastTimestampB = getConversationLastTimestamp(b);
     // Handle the case where both conversations have no messages
@@ -55,6 +61,7 @@ function sortConversationsByLastMessageDate(
 
 export function App() {
   const { theme } = useTheme();
+  const [conversations, setConversations] = useState(conversationsHistory);
   const [query, setQuery] = useState("");
 
   // Sort conversations by last message date
@@ -81,6 +88,56 @@ export function App() {
 
   const finalConversations = filteredConversations;
 
+  const messageReceivedCallback = useCallback<MessageReceivedCallback>(
+    (eventDetails) => {
+      setConversations(
+        produce((draft) => {
+          const conversation = draft.find(
+            (conversation) => conversation.id === currentConversationId
+          );
+          if (conversation) {
+            conversation.chat?.push({
+              message: eventDetails.message.join(""),
+              timestamp: new Date(),
+              role: "assistant",
+            });
+          }
+        })
+      );
+    },
+    [currentConversationId, conversations, setConversations]
+  );
+
+  const messageSentCallback = useCallback<MessageSentCallback>(
+    (eventDetails) => {
+      setConversations(
+        produce((draft) => {
+          const conversation = draft.find(
+            (conversation) => conversation.id === currentConversationId
+          );
+          if (conversation) {
+            conversation.chat?.push({
+              message: eventDetails.message,
+              timestamp: new Date(),
+              role: "user",
+            });
+          }
+        })
+      );
+    },
+    [currentConversationId, conversations, setConversations]
+  );
+
+  const initialConversation = useMemo(() => {
+    const chatClone = currentConversation?.chat?.slice() || [];
+    return chatClone;
+  }, [currentConversationId]);
+
+  const eventCallbacks: EventsConfig = {
+    messageReceived: messageReceivedCallback,
+    messageSent: messageSentCallback,
+  };
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[330px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="border-r bg-muted/40">
@@ -105,7 +162,7 @@ export function App() {
             </div>
             <nav className="grid items-start text-sm font-medium ">
               {finalConversations.map((conversation, index) => (
-                <>
+                <div key={conversation.id}>
                   <a
                     key={`conversation-${conversation.title}`}
                     className={`${
@@ -131,12 +188,15 @@ export function App() {
                         </p>
                       </div>
                       <LastMessageSummary
-                        chat={conversation.chat as ChatItem[]}
+                        lastMessage={
+                          conversation.chat?.findLast((item) => item.message)
+                            ?.message || ""
+                        }
                       ></LastMessageSummary>
                     </div>
                   </a>
                   <Separator key={"separator-" + conversation.title} />
-                </>
+                </div>
               ))}
             </nav>
           </div>
@@ -176,13 +236,15 @@ export function App() {
           </header>
           <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
             <AiChat
+              key={currentConversation.id}
               className="nlux-AiChat-style"
               adapter={models[0].adapter()}
               composerOptions={{ placeholder: "How can I help you today?" }}
-              initialConversation={currentConversation.chat}
+              initialConversation={initialConversation}
               displayOptions={{ colorScheme: theme }}
               personaOptions={currentConversation.personas}
               conversationOptions={{ conversationStarters }}
+              events={eventCallbacks}
             />
           </main>
         </div>

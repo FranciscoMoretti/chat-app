@@ -10,7 +10,7 @@ export type Conversation = {
   })[];
 };
 
-export const conversations: Conversation[] = [
+export const conversationsHistory: Conversation[] = [
   {
     id: "cnv-2",
     title: "Cooking Recipes",
