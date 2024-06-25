@@ -18,9 +18,9 @@ export const conversationsHistory: Conversation[] = [
     id: "cnv-1",
     personas: {
       assistant: {
-        name: "AI Accountant",
-        tagline: "Your Genius AI Assistant",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/albert.png",
+        name: "AI Farmer",
+        tagline: "Your Farmer Assistant",
+        avatar: "/avatars/avatar_35.png",
       },
       user: USER,
     },
@@ -51,8 +51,8 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "AI Chef",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/feather.png",
-        tagline: "Yer AI First Mate!",
+        avatar: "/avatars/avatar_05.png",
+        tagline: "Let's get cooking!",
       },
       user: USER,
     },
@@ -93,9 +93,9 @@ export const conversationsHistory: Conversation[] = [
     id: "cnv-3",
     personas: {
       assistant: {
-        name: "AI Wizard",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/harry-botter.png",
-        tagline: "Mischievously Making Magic With Mirthful AI!",
+        name: "Zookeeper",
+        avatar: "/avatars/avatar_10.png",
+        tagline: "I know my animals!",
       },
       user: USER,
     },
@@ -120,7 +120,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Travel Guide",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/travel-guide.png",
+        avatar: "/avatars/avatar_13.png",
         tagline: "Your passport to adventure!",
       },
       user: USER,
@@ -144,7 +144,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Eco Advisor",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/eco-advisor.png",
+        avatar: "/avatars/avatar_30.png",
         tagline: "Green living made easy!",
       },
       user: USER,
@@ -168,7 +168,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Career Coach",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/career-coach.png",
+        avatar: "/avatars/avatar_37.png",
         tagline: "Climb that career ladder!",
       },
       user: USER,
@@ -192,8 +192,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Mental Health",
-        avatar:
-          "https://docs.nlkit.com/nlux/images/personas/mental-health-helper.png",
+        avatar: "/avatars/avatar_06.png",
         tagline: "Your wellbeing matters!",
       },
       user: USER,
@@ -217,7 +216,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Finance Whiz",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/finance-whiz.png",
+        avatar: "/avatars/avatar_16.png",
         tagline: "Making cents of your money!",
       },
       user: USER,
@@ -241,8 +240,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Nutrition Expert",
-        avatar:
-          "https://docs.nlkit.com/nlux/images/personas/nutrition-expert.png",
+        avatar: "/avatars/avatar_21.png",
         tagline: "Fuel your body right!",
       },
       user: USER,
@@ -266,7 +264,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "DIY Master",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/diy-master.png",
+        avatar: "/avatars/avatar_12.png",
         tagline: "Crafting made simple!",
       },
       user: USER,
@@ -290,7 +288,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Tech Guru",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/tech-guru.png",
+        avatar: "/avatars/avatar_28.png",
         tagline: "Your go-to for all things tech!",
       },
       user: USER,
@@ -314,7 +312,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Fitness Coach",
-        avatar: "https://docs.nlkit.com/nlux/images/personas/fitness-coach.png",
+        avatar: "/avatars/avatar_18.png",
         tagline: "Let's get you in shape!",
       },
       user: USER,
@@ -338,8 +336,7 @@ export const conversationsHistory: Conversation[] = [
     personas: {
       assistant: {
         name: "Language Tutor",
-        avatar:
-          "https://docs.nlkit.com/nlux/images/personas/language-tutor.png",
+        avatar: "/avatars/avatar_36.png",
         tagline: "Habla conmigo!",
       },
       user: USER,
