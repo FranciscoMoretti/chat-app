@@ -19,6 +19,7 @@ import {
   ChatItem,
   EventsConfig,
   MessageReceivedCallback,
+  MessageReceivedEventDetails,
   MessageSentCallback,
 } from "@nlux/react";
 import "@nlux/themes/nova.css";
@@ -88,7 +89,9 @@ export function App() {
 
   const finalConversations = filteredConversations;
 
-  const messageReceivedCallback = useCallback<MessageReceivedCallback>(
+  const messageReceivedCallback = useCallback<
+    MessageReceivedCallback<string[]>
+  >(
     (eventDetails) => {
       setConversations(
         produce((draft) => {
