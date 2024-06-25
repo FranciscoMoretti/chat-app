@@ -69,7 +69,7 @@ function sortConversationsByLastMessageDate(
   });
 }
 
-export function App() {
+function App() {
   const { theme } = useTheme();
   const [conversations, setConversations] = useState(conversationsHistory);
   const [query, setQuery] = useState("");
