@@ -137,6 +137,7 @@ export function App() {
   }, [currentConversationId]);
 
   const eventCallbacks: EventsConfig = {
+    // @ts-expect-error lib type error
     messageReceived: messageReceivedCallback,
     messageSent: messageSentCallback,
   };
