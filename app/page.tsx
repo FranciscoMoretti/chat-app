@@ -214,12 +214,23 @@ export function App() {
               ))}
             </nav>
           </ScrollArea>
-          <div className="h-16 w-full px-4 bg-muted flex items-center justify-start">
+          <div className="h-16 w-full px-4 bg-muted flex items-center gap-4 justify-between">
             {/* Github repo */}
-            <a href="https://github.com/franciscoMoretti/chat-app">
+            <a
+              href="https://github.com/franciscoMoretti/chat-app"
+              className="flex gap-2 items-center"
+              target="_blank"
+            >
               <Button variant="ghost" size={"icon"}>
                 <GithubIcon className="h-6 w-6" />
               </Button>
+              GitHub
+            </a>
+            <a
+              href="http://www.freepik.com"
+              className="text-xs text-muted-foreground"
+            >
+              Avatars by Freepik
             </a>
           </div>
         </div>
