@@ -1,20 +1,29 @@
-import { personas } from "./personas.ts";
 import { ChatItem, PersonaOptions } from "@nlux/react";
 
 export type Conversation = {
   id: string;
-  title: string;
   personas: PersonaOptions;
   chat?: (ChatItem & {
     timestamp: Date;
   })[];
 };
 
+const USER = {
+  name: "Fran",
+  avatar: "https://github.com/franciscoMoretti.png",
+};
+
 export const conversationsHistory: Conversation[] = [
   {
     id: "cnv-2",
-    title: "Cooking Recipes",
-    personas: personas[2],
+    personas: {
+      assistant: {
+        name: "AI Chef",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/feather.png",
+        tagline: "Yer AI First Mate!",
+      },
+      user: USER,
+    },
     chat: [
       {
         role: "user",
@@ -50,8 +59,14 @@ export const conversationsHistory: Conversation[] = [
   },
   {
     id: "cnv-3",
-    title: "Fastest land animals",
-    personas: personas[0],
+    personas: {
+      assistant: {
+        name: "AI Wizard",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/harry-botter.png",
+        tagline: "Mischievously Making Magic With Mirthful AI!",
+      },
+      user: USER,
+    },
     chat: [
       {
         role: "user",
@@ -69,8 +84,14 @@ export const conversationsHistory: Conversation[] = [
   },
   {
     id: "cnv-4",
-    title: "Plants",
-    personas: personas[1],
+    personas: {
+      assistant: {
+        name: "AI Accountant",
+        tagline: "Your Genius AI Assistant",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/albert.png",
+      },
+      user: USER,
+    },
     chat: [
       {
         role: "user",
@@ -90,6 +111,248 @@ export const conversationsHistory: Conversation[] = [
           "\n" +
           "Plants are essential for life on Earth, as they produce oxygen and provide the foundation for most food chains.\n",
         timestamp: new Date("2020-01-01 00:00:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-4",
+    personas: {
+      assistant: {
+        name: "Travel Guide",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/travel-guide.png",
+        tagline: "Your passport to adventure!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "What's a must-visit place in Japan?",
+        timestamp: new Date("2023-06-28 11:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Kyoto is a must-visit. It's known for its beautiful temples, traditional gardens, and geisha districts.",
+        timestamp: new Date("2023-06-28 11:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-5",
+    personas: {
+      assistant: {
+        name: "Eco Advisor",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/eco-advisor.png",
+        tagline: "Green living made easy!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "How can I reduce my carbon footprint?",
+        timestamp: new Date("2023-06-29 16:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Use public transport, reduce meat consumption, and switch to energy-efficient appliances.",
+        timestamp: new Date("2023-06-29 16:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-6",
+    personas: {
+      assistant: {
+        name: "Career Coach",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/career-coach.png",
+        tagline: "Climb that career ladder!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "How do I ask for a raise?",
+        timestamp: new Date("2023-06-30 13:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Highlight your achievements, research market rates, and choose the right time to approach your boss.",
+        timestamp: new Date("2023-06-30 13:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-7",
+    personas: {
+      assistant: {
+        name: "Mental Health",
+        avatar:
+          "https://docs.nlkit.com/nlux/images/personas/mental-health-helper.png",
+        tagline: "Your wellbeing matters!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "How can I manage stress?",
+        timestamp: new Date("2023-07-01 15:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Practice deep breathing, regular exercise, and mindfulness meditation. Also, ensure you're getting enough sleep.",
+        timestamp: new Date("2023-07-01 15:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-8",
+    personas: {
+      assistant: {
+        name: "Finance Whiz",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/finance-whiz.png",
+        tagline: "Making cents of your money!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "What's a good way to start investing?",
+        timestamp: new Date("2023-07-02 10:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Start with a diverse index fund. It's low-cost and provides broad market exposure.",
+        timestamp: new Date("2023-07-02 10:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-9",
+    personas: {
+      assistant: {
+        name: "Nutrition Expert",
+        avatar:
+          "https://docs.nlkit.com/nlux/images/personas/nutrition-expert.png",
+        tagline: "Fuel your body right!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "What's a balanced breakfast?",
+        timestamp: new Date("2023-07-03 08:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "A balanced breakfast includes protein (eggs/yogurt), complex carbs (oatmeal/whole grain toast), and fruits or vegetables.",
+        timestamp: new Date("2023-07-03 08:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-10",
+    personas: {
+      assistant: {
+        name: "DIY Master",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/diy-master.png",
+        tagline: "Crafting made simple!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "How do I fix a leaky faucet?",
+        timestamp: new Date("2023-07-04 14:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Turn off water supply, remove handle, replace worn-out washers or O-rings, reassemble, and test.",
+        timestamp: new Date("2023-07-04 14:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-11",
+    personas: {
+      assistant: {
+        name: "Tech Guru",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/tech-guru.png",
+        tagline: "Your go-to for all things tech!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "What's the latest in AI?",
+        timestamp: new Date("2023-06-25 10:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "GPT-4 is making waves with its advanced language understanding and generation capabilities.",
+        timestamp: new Date("2023-06-25 10:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-12",
+    personas: {
+      assistant: {
+        name: "Fitness Coach",
+        avatar: "https://docs.nlkit.com/nlux/images/personas/fitness-coach.png",
+        tagline: "Let's get you in shape!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "How can I start a workout routine?",
+        timestamp: new Date("2023-06-26 09:00:00"),
+      },
+      {
+        role: "assistant",
+        message:
+          "Start with 3 days a week, mixing cardio and strength training. Gradually increase intensity and frequency.",
+        timestamp: new Date("2023-06-26 09:01:00"),
+      },
+    ],
+  },
+  {
+    id: "cnv-13",
+    personas: {
+      assistant: {
+        name: "Language Tutor",
+        avatar:
+          "https://docs.nlkit.com/nlux/images/personas/language-tutor.png",
+        tagline: "Habla conmigo!",
+      },
+      user: USER,
+    },
+    chat: [
+      {
+        role: "user",
+        message: "How do I say 'hello' in Spanish?",
+        timestamp: new Date("2023-06-27 14:00:00"),
+      },
+      {
+        role: "assistant",
+        message: "'Hello' in Spanish is 'Hola'. It's pronounced 'OH-lah'.",
+        timestamp: new Date("2023-06-27 14:01:00"),
       },
     ],
   },

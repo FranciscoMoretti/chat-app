@@ -168,7 +168,7 @@ export function App() {
               {finalConversations.map((conversation, index) => (
                 <div key={conversation.id}>
                   <a
-                    key={`conversation-${conversation.title}`}
+                    key={`conversation-${conversation.id}`}
                     className={`${
                       conversation.id == currentConversationId
                         ? "!bg-secondary"
@@ -199,7 +199,7 @@ export function App() {
                       ></LastMessageSummary>
                     </div>
                   </a>
-                  <Separator key={"separator-" + conversation.title} />
+                  <Separator key={"separator-" + conversation.id} />
                 </div>
               ))}
             </nav>
