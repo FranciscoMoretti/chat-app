@@ -31,10 +31,18 @@ import { Input } from "@/components/ui/input";
 import { produce } from "immer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-function LastMessageSummary({ lastMessage }: { lastMessage: string }) {
+function LastMessageSummary({
+  lastMessage,
+  maxLength = 34,
+}: {
+  lastMessage: string;
+  maxLength?: number;
+}) {
   return (
-    <p className="text-sm font-normal text-muted-foreground">
-      {lastMessage.length > 37 ? lastMessage.slice(0, 34) + "..." : lastMessage}
+    <p className="text-xs font-normal text-muted-foreground">
+      {lastMessage.length > maxLength
+        ? lastMessage.slice(0, maxLength - 3) + "..."
+        : lastMessage}
     </p>
   );
 }
