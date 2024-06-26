@@ -76,6 +76,11 @@ function App() {
 
   // Conversations restored from local storage if they exist
   const restoredConversations = useMemo(() => {
+    // Handle server side pre-rendering
+    if (typeof window === "undefined") {
+      return [];
+    }
+
     const storedConversations = localStorage.getItem("conversations");
     // Unstringify the conversations
     if (storedConversations) {
@@ -104,7 +109,9 @@ function App() {
 
   // Persist conversations to local storage with debounce
   useEffect(() => {
-    localStorage.setItem("conversations", JSON.stringify(conversations));
+    if (typeof window !== "undefined") {
+      localStorage.setItem("conversations", JSON.stringify(conversations));
+    }
   }, [conversations]);
 
   // Sort conversations by last message date
