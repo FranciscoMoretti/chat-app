@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
 import {
@@ -73,6 +73,39 @@ function App() {
   const { theme } = useTheme();
   const [conversations, setConversations] = useState(conversationsHistory);
   const [query, setQuery] = useState("");
+
+  // Conversations restored from local storage if they exist
+  const restoredConversations = useMemo(() => {
+    const storedConversations = localStorage.getItem("conversations");
+    // Unstringify the conversations
+    if (storedConversations) {
+      const parsed = JSON.parse(storedConversations);
+      // Date needs to be converted back to date objects
+      return parsed.map((conversation: Conversation) => {
+        return {
+          ...conversation,
+          chat: conversation.chat?.map((item) => {
+            return {
+              ...item,
+              timestamp: new Date(item.timestamp),
+            };
+          }),
+        };
+      });
+    }
+    return [];
+  }, []);
+
+  useEffect(() => {
+    if (restoredConversations.length > 0) {
+      setConversations(restoredConversations);
+    }
+  }, [restoredConversations]);
+
+  // Persist conversations to local storage with debounce
+  useEffect(() => {
+    localStorage.setItem("conversations", JSON.stringify(conversations));
+  }, [conversations]);
 
   // Sort conversations by last message date
   const sortedConversations = useMemo(
