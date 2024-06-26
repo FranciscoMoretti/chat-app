@@ -109,9 +109,12 @@ function App() {
 
   // Persist conversations to local storage with debounce
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("conversations", JSON.stringify(conversations));
-    }
+    const timer = setTimeout(() => {
+      if (typeof window !== "undefined") {
+        localStorage.setItem("conversations", JSON.stringify(conversations));
+      }
+    }, 1000);
+    return () => clearTimeout(timer);
   }, [conversations]);
 
   // Sort conversations by last message date
