@@ -1,4 +1,4 @@
-# AI Chat App - Chat with your assistants
+# 🤖 AI Chat App - Chat with your assistants
 
 ![Chat with your assistants demo app](app/og.png)
 
@@ -6,13 +6,20 @@ This demo app is a chat app that allows you to chat with different assistants.
 
 It uses [NLUX](https://docs.nlkit.com/nlux/) for the AIChat component and the communication with the LLM provider.
 
-## Features
+## 🌟 Key Features
 
-- Multiple assistants
-- Persistence with local storage
-- Conversations sorted by last message date
+🤖 Chat with Multiple AI Assistants
+💾 Persistent Conversations via Local Storage
+📅 Conversation Sorting by Recent Activity
 
-## Getting Started
+## 🛠️ Tech Stack
+
+🔥 Next.js: For blazing-fast, SEO-friendly React applications
+🎨 TailwindCSS: Utility-first CSS framework for rapid UI development
+🖌️ Shadcn UI: Beautiful, customizable UI components
+🧠 NLUX: Powerful AI integration for natural language processing
+
+## 🚀 Getting Started
 
 Install the npm packages
 
