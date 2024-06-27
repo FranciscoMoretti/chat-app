@@ -12,7 +12,7 @@ It uses [NLUX](https://docs.nlkit.com/nlux/) for the AIChat component and the co
 - Persistence with local storage
 - Conversations sorted by last message date
 
-## Installing
+## Getting Started
 
 Install the npm packages
 
@@ -24,9 +24,7 @@ yarn
 pnpm install
 ```
 
-## Getting Started
-
-First, run the development server:
+Run the development server:
 
 ```bash
 npm run dev
