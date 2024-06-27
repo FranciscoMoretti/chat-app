@@ -339,8 +339,6 @@ function App() {
             <h3 className="text-3xl font-semibold">
               Chat with your assistants
             </h3>
-            {/* Create a link to the nlux site */}
-
             <p className="text-lg font-normal text-muted-foreground">
               This demo uses{" "}
               <a

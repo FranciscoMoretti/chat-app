@@ -107,7 +107,7 @@ export const conversationsHistory: Conversation[] = [
       },
       {
         role: "assistant",
-        message: "The **fastest** land animal be the mighty `cheetah`!",
+        message: "The **fastest** land animal is the mighty `cheetah`!",
 
         timestamp: new Date(Date.now()),
       },
