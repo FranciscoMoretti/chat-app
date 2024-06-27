@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useMemo, useState, useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,6 +30,7 @@ import { GithubIcon } from "@/components/github-icon";
 import { Input } from "@/components/ui/input";
 import { produce } from "immer";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Link from "next/link";
 
 function LastMessageSummary({
   lastMessage,
@@ -207,7 +208,7 @@ function App() {
           </div>
           {/* Height is calculated as screen height - header - footer */}
           <ScrollArea className="flex-1 w-full h-[calc(100vh-64px-64px)]">
-            <div className="relative m-2">
+            <div className="relative m-2 mr-4">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="search"
@@ -301,7 +302,16 @@ function App() {
               </div>
             ) : null}
           </div>
-          <ThemeToggle />
+          <div className="flex gap-2">
+            <Link
+              href="https://github.com/franciscoMoretti/chat-app"
+              className={buttonVariants({ variant: "ghost", size: "icon" })}
+              target="_blank"
+            >
+              <GithubIcon className="h-4 w-4" />
+            </Link>
+            <ThemeToggle />
+          </div>
         </header>
         {currentConversation ? (
           <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
