@@ -74,6 +74,8 @@ function App() {
   const { theme } = useTheme();
   const [conversations, setConversations] = useState(conversationsHistory);
   const [query, setQuery] = useState("");
+  const [currentConversationId, setCurrentConversationId] =
+    useState<string>("");
 
   // Conversations restored from local storage if they exist
   const restoredConversations = useMemo(() => {
@@ -123,8 +125,6 @@ function App() {
     () => sortConversationsByLastMessageDate(conversations),
     [conversations]
   );
-  const [currentConversationId, setCurrentConversationId] =
-    useState<string>("");
 
   const currentConversation = sortedConversations.find(
     (conversation) => conversation.id === currentConversationId
@@ -199,12 +199,19 @@ function App() {
     <div className="grid min-h-screen w-full md:grid-cols-[330px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="border-r bg-muted/40">
         <div className="flex h-full max-h-screen flex-col">
-          <div className="flex h-16 gap-4 bg-muted justify-start  items-center border-b px-4 lg:h-[60px] lg:px-6">
+          <div className="flex h-16 gap-4 bg-muted justify-between  items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Avatar>
               <AvatarImage src={"https://github.com/franciscoMoretti.png"} />
               <AvatarFallback>F</AvatarFallback>
             </Avatar>
-            <h1 className="text-xl">Chat App</h1>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setCurrentConversationId("");
+              }}
+            >
+              <h1 className="text-xl">Chat App</h1>
+            </Button>
           </div>
           {/* Height is calculated as screen height - header - footer */}
           <ScrollArea className="flex-1 w-full h-[calc(100vh-64px-64px)]">
