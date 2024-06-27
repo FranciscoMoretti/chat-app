@@ -278,10 +278,10 @@ function App() {
           </div>
         </div>
       </div>
-      {currentConversation ? (
-        <div className="flex flex-col">
-          <header className="flex h-16 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
-            <div className="w-full flex-1">
+      <div className="flex flex-col">
+        <header className="flex h-16 items-center gap-4 border-b bg-muted px-4 lg:h-[60px] lg:px-6">
+          <div className="w-full flex-1">
+            {currentConversation ? (
               <div className="relative flex gap-3 items-center">
                 <AssistantAvatar
                   avatar={
@@ -299,9 +299,11 @@ function App() {
                   </p>
                 </div>
               </div>
-            </div>
-            <ThemeToggle />
-          </header>
+            ) : null}
+          </div>
+          <ThemeToggle />
+        </header>
+        {currentConversation ? (
           <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
             <AiChat
               key={currentConversation.id}
@@ -315,12 +317,12 @@ function App() {
               events={eventCallbacks}
             />
           </main>
-        </div>
-      ) : (
-        <div className="flex flex-1 items-center justify-center text-2xl">
-          <p>Select an assistant to start chatting</p>
-        </div>
-      )}
+        ) : (
+          <div className="flex flex-1 items-center justify-center text-2xl">
+            <p>Select an assistant to start chatting</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
