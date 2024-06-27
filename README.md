@@ -1,4 +1,4 @@
-# AI Chat App - Talk with your assistants like
+# AI Chat App - Talk with your assistants
 
 <!-- TODO: Write readme -->
 
