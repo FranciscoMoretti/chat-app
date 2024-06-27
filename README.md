@@ -1,6 +1,6 @@
 # 🤖 AI Chat App - Chat with your assistants
 
-![Chat with your assistants demo app](app/og.png)
+![Chat with your assistants demo app](app/opengraph-image.png)
 
 This demo app is a chat app that allows you to chat with different assistants.
 
