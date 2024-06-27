@@ -50,7 +50,7 @@ export const conversationsHistory: Conversation[] = [
     id: "cnv-2",
     personas: {
       assistant: {
-        name: "AI Chef",
+        name: "Super Chef",
         avatar: "/avatars/avatar_05.png",
         tagline: "Let's get cooking!",
       },
@@ -107,8 +107,7 @@ export const conversationsHistory: Conversation[] = [
       },
       {
         role: "assistant",
-        message:
-          "Yarrr! The **fastest** land animal be the mighty `cheetah`! It zooms across the savannah like a cannonball from a pirate ship!",
+        message: "The **fastest** land animal be the mighty `cheetah`!",
 
         timestamp: new Date(Date.now()),
       },
