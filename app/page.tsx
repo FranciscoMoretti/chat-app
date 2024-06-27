@@ -335,8 +335,23 @@ function App() {
             />
           </main>
         ) : (
-          <div className="flex flex-1 items-center justify-center text-2xl">
-            <p>Select an assistant to start chatting</p>
+          <div className="flex flex-col gap-3 flex-1 items-center justify-center ">
+            <h3 className="text-3xl font-semibold">
+              Chat with your assistants
+            </h3>
+            {/* Create a link to the nlux site */}
+
+            <p className="text-lg font-normal text-muted-foreground">
+              This demo uses{" "}
+              <a
+                href="https://github.com/nlkitai/nlux"
+                target="_blank"
+                className="underline text-foreground"
+              >
+                <span>NLUX</span>
+              </a>
+              , a conversational AI library
+            </p>
           </div>
         )}
       </div>
