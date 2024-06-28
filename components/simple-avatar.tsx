@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-export function AssistantAvatar({
+export function SimpleAvatar({
   avatar,
   name,
   className,
@@ -14,10 +14,12 @@ export function AssistantAvatar({
       <AvatarImage src={avatar as string} />
 
       <AvatarFallback>
-        {name
-          .split(" ")
-          .slice(0, 2)
-          .reduce((a, b) => a + b[0], "")}
+        {!name
+          ? ""
+          : name
+              .split(" ")
+              .slice(0, 2)
+              .reduce((a, b) => a + b[0], "")}
       </AvatarFallback>
     </Avatar>
   );

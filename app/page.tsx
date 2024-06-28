@@ -37,72 +37,53 @@ import {
 } from "@/lib/conversations";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { AssistantAvatar } from "@/components/assistant-avatar";
+import { SimpleAvatar } from "@/components/simple-avatar";
 import { UserSettingsForm } from "@/components/user-settings";
-import { TypeOf, ZodObject, ZodString, ZodTypeAny } from "zod";
+import { set, TypeOf, ZodObject, ZodString, ZodTypeAny } from "zod";
+import useLocalStorage from "@/lib/localstorage";
 
+const initialData = {
+  conversations: conversationsHistory,
+  imageUrl: "https://github.com/franciscoMoretti.png",
+};
 function App() {
   const { theme } = useTheme();
-  const [conversations, setConversations] = useState(conversationsHistory);
   const [query, setQuery] = useState("");
-  const [userImgUrl, setUserImgUrl] = useState<string>(
-    "https://github.com/franciscoMoretti.png"
-  );
   const [currentConversationId, setCurrentConversationId] =
     useState<string>("");
 
-  // Conversations restored from local storage if they exist
-  const restoredConversations = useMemo(() => {
-    // Handle server side pre-rendering
-    if (typeof window === "undefined") {
-      return [];
-    }
-
-    const storedConversations = localStorage.getItem("conversations");
-    // Unstringify the conversations
-    if (storedConversations) {
-      const parsed = JSON.parse(storedConversations);
-      // Date needs to be converted back to date objects
-      return parsed.map((conversation: Conversation) => {
-        return {
-          ...conversation,
-          chat: conversation.chat?.map((item) => {
-            return {
-              ...item,
-              timestamp: new Date(item.timestamp),
-            };
-          }),
-        };
-      });
-    }
-    return [];
-  }, []);
+  const [storage, setStorage] = useLocalStorage({
+    key: "chat_app", // TODO: Change name
+    defaultValue: initialData,
+  });
+  const [conversations, setConversations] = useState<Conversation[]>(() => []);
+  const [userImgUrl, setUserImgUrl] = useState<string>("");
 
   useEffect(() => {
-    if (restoredConversations.length > 0) {
-      setConversations(restoredConversations);
-    }
-  }, [restoredConversations]);
+    // To prevent mismatch with pre-render, first show no conversations and then load them
+    setConversations(parsedToObjects(storage.conversations));
+    setUserImgUrl(storage.imageUrl);
+  }, []);
 
   // Persist conversations to local storage with debounce
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (typeof window !== "undefined") {
-        localStorage.setItem("conversations", JSON.stringify(conversations));
-        localStorage.setItem("user_img_url", userImgUrl);
-      }
+      setStorage({
+        conversations: conversations,
+        imageUrl: userImgUrl,
+      });
     }, 1000);
     return () => clearTimeout(timer);
-  }, [conversations]);
+  }, [conversations, userImgUrl]);
+
+  const userName = useMemo(
+    () => conversations[0]?.personas.user?.name,
+    [conversations]
+  );
 
   // Sort conversations by last message date
   const sortedConversations = useMemo(
     () => sortConversationsByLastMessageDate(conversations),
-    [conversations]
-  );
-
-  const userName = useMemo(
-    () => conversations[0]?.personas.user?.name,
     [conversations]
   );
 
@@ -182,10 +163,7 @@ function App() {
           <div className="flex h-16 gap-4 bg-muted justify-between  items-center border-b px-4 lg:h-[60px] lg:px-6">
             <Sheet>
               <SheetTrigger>
-                <Avatar>
-                  <AvatarImage src={userImgUrl} />
-                  <AvatarFallback>F</AvatarFallback>
-                </Avatar>
+                <SimpleAvatar avatar={userImgUrl} name={userName || ""} />
               </SheetTrigger>
               <SheetContent side={"left"} className="w-[300px]">
                 <SheetHeader className="gap-4">
@@ -246,7 +224,7 @@ function App() {
                     } flex items-center h-20 gap-3 px-3 py-2 transition-all hover:text-primary cursor-pointer hover:bg-secondary `}
                     onClick={() => setCurrentConversationId(conversation.id)}
                   >
-                    <AssistantAvatar
+                    <SimpleAvatar
                       avatar={conversation.personas.assistant?.avatar as string}
                       name={conversation.personas.assistant?.name as string}
                     />
@@ -300,7 +278,7 @@ function App() {
           <div className="w-full flex-1">
             {currentConversation ? (
               <div className="relative flex gap-3 items-center">
-                <AssistantAvatar
+                <SimpleAvatar
                   avatar={
                     currentConversation.personas.assistant?.avatar as string
                   }
@@ -367,3 +345,19 @@ function App() {
 }
 
 export default App;
+function parsedToObjects(parsed: Conversation[]): Conversation[] {
+  return parsed.map((conversation: Conversation) => {
+    return {
+      ...conversation,
+      chat: conversation.chat?.map((item) => {
+        return {
+          ...item,
+          timestamp:
+            typeof item.timestamp === "string"
+              ? new Date(item.timestamp)
+              : item.timestamp,
+        };
+      }),
+    };
+  });
+}
