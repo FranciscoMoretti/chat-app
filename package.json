@@ -16,7 +16,7 @@
     "@nlux/react": "^2.7.6",
     "@nlux/themes": "^2.7.6",
     "@radix-ui/react-avatar": "^1",
-    "@radix-ui/react-dialog": "^1",
+    "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2",
     "@radix-ui/react-icons": "^1",
     "@radix-ui/react-scroll-area": "^1.1.0",

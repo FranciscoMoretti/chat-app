@@ -31,44 +31,8 @@ import { Input } from "@/components/ui/input";
 import { produce } from "immer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
-
-function LastMessageSummary({
-  lastMessage,
-  maxLength = 34,
-}: {
-  lastMessage: string;
-  maxLength?: number;
-}) {
-  return (
-    <p className="text-xs font-normal text-muted-foreground">
-      {lastMessage.length > maxLength
-        ? lastMessage.slice(0, maxLength - 3) + "..."
-        : lastMessage}
-    </p>
-  );
-}
-
-function sortConversationsByLastMessageDate(
-  conversations: Conversation[]
-): Conversation[] {
-  const clone = conversations.slice();
-  return clone.sort((a, b) => {
-    const lastTimestampA = getConversationLastTimestamp(a);
-    const lastTimestampB = getConversationLastTimestamp(b);
-    // Handle the case where both conversations have no messages
-    if (!lastTimestampA && !lastTimestampB) {
-      return 0;
-    }
-    // Handle the case where only one conversation has no messages
-    if (!lastTimestampA) {
-      return 1;
-    }
-    if (!lastTimestampB) {
-      return -1;
-    }
-    return lastTimestampB?.getTime() - lastTimestampA?.getTime();
-  });
-}
+import { LastMessageSummary } from "@/components/last-message-summary";
+import { sortConversationsByLastMessageDate } from "@/lib/conversations";
 
 function App() {
   const { theme } = useTheme();
@@ -358,7 +322,7 @@ function App() {
 }
 
 export default App;
-function getConversationLastTimestamp(
+export function getConversationLastTimestamp(
   conversation: Conversation
 ): Date | undefined {
   return conversation.chat?.findLast((item) => item.message)?.timestamp;
