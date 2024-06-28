@@ -87,8 +87,12 @@ function App() {
     [conversations]
   );
 
-  const currentConversation = sortedConversations.find(
-    (conversation) => conversation.id === currentConversationId
+  const currentConversation = useMemo(
+    () =>
+      conversations.find(
+        (conversation) => conversation.id === currentConversationId
+      ),
+    [conversations, currentConversationId]
   );
 
   const filteredConversations = useMemo(
