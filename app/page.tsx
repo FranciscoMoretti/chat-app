@@ -3,6 +3,14 @@ import { useCallback, useMemo, useState, useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Search } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import { Conversation, conversationsHistory } from "@/data/history";
 import { models } from "@/data/models";
@@ -30,11 +38,16 @@ import {
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { AssistantAvatar } from "@/components/assistant-avatar";
+import { UserSettingsForm } from "@/components/user-settings";
+import { TypeOf, ZodObject, ZodString, ZodTypeAny } from "zod";
 
 function App() {
   const { theme } = useTheme();
   const [conversations, setConversations] = useState(conversationsHistory);
   const [query, setQuery] = useState("");
+  const [userImgUrl, setUserImgUrl] = useState<string>(
+    "https://github.com/franciscoMoretti.png"
+  );
   const [currentConversationId, setCurrentConversationId] =
     useState<string>("");
 
@@ -76,6 +89,7 @@ function App() {
     const timer = setTimeout(() => {
       if (typeof window !== "undefined") {
         localStorage.setItem("conversations", JSON.stringify(conversations));
+        localStorage.setItem("user_img_url", userImgUrl);
       }
     }, 1000);
     return () => clearTimeout(timer);
@@ -84,6 +98,11 @@ function App() {
   // Sort conversations by last message date
   const sortedConversations = useMemo(
     () => sortConversationsByLastMessageDate(conversations),
+    [conversations]
+  );
+
+  const userName = useMemo(
+    () => conversations[0]?.personas.user?.name,
     [conversations]
   );
 
@@ -157,14 +176,43 @@ function App() {
   };
 
   return (
-    <div className="grid min-h-screen w-full md:grid-cols-[330px_1fr] lg:grid-cols-[280px_1fr]">
+    <div className="grid min-h-screen w-full md:grid-cols-[300px_1fr]">
       <div className="border-r bg-muted/40">
         <div className="flex h-full max-h-screen flex-col">
           <div className="flex h-16 gap-4 bg-muted justify-between  items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Avatar>
-              <AvatarImage src={"https://github.com/franciscoMoretti.png"} />
-              <AvatarFallback>F</AvatarFallback>
-            </Avatar>
+            <Sheet>
+              <SheetTrigger>
+                <Avatar>
+                  <AvatarImage src={userImgUrl} />
+                  <AvatarFallback>F</AvatarFallback>
+                </Avatar>
+              </SheetTrigger>
+              <SheetContent side={"left"} className="w-[300px]">
+                <SheetHeader className="gap-4">
+                  <SheetTitle>User Settings</SheetTitle>
+                  <SheetDescription>
+                    <UserSettingsForm
+                      initialUserName={userName || ""}
+                      initialImageUrl={userImgUrl}
+                      onSubmit={(data) => {
+                        setUserImgUrl(data.image_url);
+                        // Update user name in conversations
+                        setConversations(
+                          produce((draft) => {
+                            draft.forEach((conversation) => {
+                              if (conversation && conversation.personas.user) {
+                                conversation.personas.user.name = data.username;
+                              }
+                            });
+                          })
+                        );
+                      }}
+                    />
+                  </SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
+
             <Button
               variant="ghost"
               onClick={() => {
