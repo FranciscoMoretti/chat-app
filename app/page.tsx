@@ -2,24 +2,16 @@
 import { useCallback, useMemo, useState, useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Check, Search, Moon, Sun, Monitor } from "lucide-react";
+import { Search } from "lucide-react";
 
 import { Conversation, conversationsHistory } from "@/data/history";
 import { models } from "@/data/models";
 
 import {
   AiChat,
-  ChatItem,
   EventsConfig,
   MessageReceivedCallback,
-  MessageReceivedEventDetails,
   MessageSentCallback,
 } from "@nlux/react";
 import "@nlux/themes/nova.css";
@@ -33,6 +25,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { LastMessageSummary } from "@/components/last-message-summary";
 import { sortConversationsByLastMessageDate } from "@/lib/conversations";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function App() {
   const { theme } = useTheme();
@@ -348,34 +341,5 @@ function AssistantAvatar({
           .reduce((a, b) => a + b[0], "")}
       </AvatarFallback>
     </Avatar>
-  );
-}
-
-function ThemeToggle() {
-  const { setTheme } = useTheme();
-  return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Toggle theme</span>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
-          <Sun className="h-[1.2rem] w-[1.2rem] mr-2" />
-          Light
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
-          <Moon className="h-[1.2rem] w-[1.2rem] mr-2" />
-          Dark
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("auto")}>
-          <Monitor className="h-[1.2rem] w-[1.2rem] mr-2" />
-          System
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
   );
 }
