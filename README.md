@@ -8,19 +8,19 @@ It uses [NLUX](https://docs.nlkit.com/nlux/) for the AIChat component and the co
 
 ## 🌟 Key Features
 
-🤖 Chat with Multiple AI Assistants
-💾 Persistent Conversations via Local Storage
-📅 Conversation Sorting by Recent Activity
-🔍 Search for Conversations
-🗃️ Conversation history as context
+- 🤖 Chat with Multiple AI Assistants
+- 💾 Persistent Conversations via Local Storage
+- 📅 Conversation Sorting by Recent Activity
+- 🔍 Search for Conversations
+- 🗃️ Conversation history as context
 
 ## 🛠️ Tech Stack
 
-🔥 Next.js: For blazing-fast, SEO-friendly React applications
-🎨 TailwindCSS: Utility-first CSS framework for rapid UI development
-🖌️ Shadcn UI: Beautiful, customizable UI components
-🧠 NLUX: Powerful AI integration for natural language processing
-🤖 OpenAI: OpenAI LLM provider
+- 🔥 Next.js: For blazing-fast, SEO-friendly React applications
+- 🎨 TailwindCSS: Utility-first CSS framework for rapid UI development
+- 🖌️ Shadcn UI: Beautiful, customizable UI components
+- 🧠 NLUX: Powerful AI integration for natural language processing
+- 🪄 OpenAI: OpenAI LLM provider
 
 ## 🚀 Getting Started
 
