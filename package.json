@@ -26,6 +26,8 @@
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-toast": "^1.2.1",
+    "@upstash/ratelimit": "^1.2.1",
+    "@vercel/kv": "^2.0.0",
     "ai": "^3.2.2",
     "class-variance-authority": "^0",
     "clsx": "^2",

@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/sheet";
 
 import { Conversation, conversationsHistory } from "@/data/history";
-import { models } from "@/data/models";
 
 import {
   AiChat,
@@ -41,6 +40,7 @@ import { SimpleAvatar } from "@/components/simple-avatar";
 import { UserSettingsForm } from "@/components/user-settings";
 import { set, TypeOf, ZodObject, ZodString, ZodTypeAny } from "zod";
 import useLocalStorage from "@/lib/localstorage";
+import { openAiAdapter } from "@/adapter/openai";
 
 const initialData = {
   conversations: conversationsHistory,
@@ -316,7 +316,7 @@ function App() {
             <AiChat
               key={currentConversation.id}
               className="nlux-AiChat-style"
-              adapter={models[0].adapter()}
+              adapter={openAiAdapter()}
               composerOptions={{ placeholder: "How can I help you today?" }}
               initialConversation={initialConversation}
               displayOptions={{ colorScheme: theme }}
