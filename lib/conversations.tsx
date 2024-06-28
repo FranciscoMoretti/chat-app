@@ -1,5 +1,6 @@
 "use client";
 import { Conversation } from "@/data/history";
+import { ChatItem } from "@nlux/react";
 
 export function sortConversationsByLastMessageDate(
   conversations: Conversation[]
@@ -26,4 +27,25 @@ export function getConversationLastTimestamp(
   conversation: Conversation
 ): Date | undefined {
   return conversation.chat?.findLast((item) => item.message)?.timestamp;
+}
+
+export function charCountToTokens(charCount: number): number {
+  return Math.ceil(charCount / 4);
+}
+
+export function clipChatMessagesUpToNTokens(
+  chatItems: ChatItem[],
+  maxTokens: number
+): ChatItem[] {
+  let totalTokens = 0;
+  let clippedItems = chatItems.slice();
+  for (let i = chatItems.length - 1; i >= 0; i--) {
+    const item = chatItems[i];
+    totalTokens += charCountToTokens(item.message.length);
+    if (totalTokens > maxTokens) {
+      clippedItems = chatItems.slice(i + 1);
+      break;
+    }
+  }
+  return clippedItems;
 }

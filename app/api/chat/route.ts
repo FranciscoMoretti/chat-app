@@ -26,16 +26,19 @@ export async function POST(req: Request) {
     });
   }
 
-  const { prompt } = await req.json();
+  const { prompt, messages } = await req.json();
 
+  //  API KEY defaults to the OPENAI_API_KEY environment variable.
   const result = await streamText({
     model: openai("gpt-3.5-turbo"),
     messages: [
+      ...messages,
       {
-        role: "system",
+        role: "user",
         content: prompt,
       },
     ],
+    maxTokens: 1000,
 
     async onFinish({ text, toolCalls, toolResults, usage, finishReason }) {
       // implement your own logic here, e.g. for storing messages

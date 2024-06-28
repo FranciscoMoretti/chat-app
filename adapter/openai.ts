@@ -1,17 +1,38 @@
-import { ChatAdapter, StreamingAdapterObserver } from "@nlux/react";
+import { clipChatMessagesUpToNTokens } from "@/lib/conversations";
+import {
+  ChatAdapter,
+  ChatAdapterExtras,
+  ChatItem,
+  StreamingAdapterObserver,
+} from "@nlux/react";
 
-// A demo API by NLUX that connects to OpenAI
-// and returns a stream of Server-Sent events
 const demoProxyServerUrl = "/api/chat";
 
-// If you are looking to build your own AI endpoint, you can check the Getting Started guides on NLUX
-// that explain how to integrate with Next.js, Node.js, LangServe, and other frameworks.
-// https://docs.nlkit.com/nlux/learn/get-started/
+function chatHistoryMessageInSingleString(
+  chatHistory: (ChatItem<string[]> | ChatItem<string>)[]
+): ChatItem<string>[] {
+  return chatHistory.map((m) => {
+    return {
+      role: m.role,
+      message: typeof m.message === "string" ? m.message : m.message.join(""),
+    };
+  });
+}
 
 // Adapter to send query to the server and receive a stream of chunks as response
 export const openAiAdapter: () => ChatAdapter = () => ({
-  streamText: async (prompt: string, observer: StreamingAdapterObserver) => {
-    const body = { prompt };
+  streamText: async (
+    prompt: string,
+    observer: StreamingAdapterObserver,
+    extras: ChatAdapterExtras
+  ) => {
+    const body = {
+      prompt,
+      messages: clipChatMessagesUpToNTokens(
+        chatHistoryMessageInSingleString(extras.conversationHistory || []),
+        200
+      ).map((m) => ({ role: m.role, content: m.message })),
+    };
     const response = await fetch(demoProxyServerUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
