@@ -1,6 +1,6 @@
 "use client";
 import { Conversation } from "@/data/history";
-import { getConversationLastTimestamp } from "./page";
+import { getConversationLastTimestamp } from "@/lib/conversations";
 
 export function sortConversationsByLastMessageDate(
   conversations: Conversation[]

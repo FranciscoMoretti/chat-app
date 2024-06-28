@@ -2,7 +2,6 @@
 import { useCallback, useMemo, useState, useEffect } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Search } from "lucide-react";
 
 import { Conversation, conversationsHistory } from "@/data/history";
@@ -24,8 +23,13 @@ import { produce } from "immer";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { LastMessageSummary } from "@/components/last-message-summary";
-import { sortConversationsByLastMessageDate } from "@/lib/conversations";
+import {
+  getConversationLastTimestamp,
+  sortConversationsByLastMessageDate,
+} from "@/lib/conversations";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { AssistantAvatar } from "@/components/assistant-avatar";
 
 function App() {
   const { theme } = useTheme();
@@ -315,31 +319,3 @@ function App() {
 }
 
 export default App;
-export function getConversationLastTimestamp(
-  conversation: Conversation
-): Date | undefined {
-  return conversation.chat?.findLast((item) => item.message)?.timestamp;
-}
-
-function AssistantAvatar({
-  avatar,
-  name,
-  className,
-}: {
-  avatar: string;
-  name: string;
-  className?: string;
-}) {
-  return (
-    <Avatar className={className}>
-      <AvatarImage src={avatar as string} />
-
-      <AvatarFallback>
-        {name
-          .split(" ")
-          .slice(0, 2)
-          .reduce((a, b) => a + b[0], "")}
-      </AvatarFallback>
-    </Avatar>
-  );
-}

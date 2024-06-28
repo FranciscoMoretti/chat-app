@@ -1,5 +1,4 @@
 "use client";
-import { getConversationLastTimestamp } from "@/app/page";
 import { Conversation } from "@/data/history";
 
 export function sortConversationsByLastMessageDate(
@@ -22,4 +21,9 @@ export function sortConversationsByLastMessageDate(
     }
     return lastTimestampB?.getTime() - lastTimestampA?.getTime();
   });
+}
+export function getConversationLastTimestamp(
+  conversation: Conversation
+): Date | undefined {
+  return conversation.chat?.findLast((item) => item.message)?.timestamp;
 }
