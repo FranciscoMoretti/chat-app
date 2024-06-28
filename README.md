@@ -11,6 +11,8 @@ It uses [NLUX](https://docs.nlkit.com/nlux/) for the AIChat component and the co
 🤖 Chat with Multiple AI Assistants
 💾 Persistent Conversations via Local Storage
 📅 Conversation Sorting by Recent Activity
+🔍 Search for Conversations
+🗃️ Conversation history as context
 
 ## 🛠️ Tech Stack
 
@@ -18,6 +20,7 @@ It uses [NLUX](https://docs.nlkit.com/nlux/) for the AIChat component and the co
 🎨 TailwindCSS: Utility-first CSS framework for rapid UI development
 🖌️ Shadcn UI: Beautiful, customizable UI components
 🧠 NLUX: Powerful AI integration for natural language processing
+🤖 OpenAI: OpenAI LLM provider
 
 ## 🚀 Getting Started
 
