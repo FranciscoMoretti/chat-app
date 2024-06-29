@@ -35,10 +35,8 @@ import {
   sortConversationsByLastMessageDate,
 } from "@/lib/conversations";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { SimpleAvatar } from "@/components/simple-avatar";
 import { UserSettingsForm } from "@/components/user-settings";
-import { set, TypeOf, ZodObject, ZodString, ZodTypeAny } from "zod";
 import useLocalStorage from "@/lib/localstorage";
 import { openAiAdapter } from "@/adapter/openai";
 

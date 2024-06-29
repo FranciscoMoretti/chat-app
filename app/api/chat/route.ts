@@ -5,14 +5,13 @@ import { Ratelimit } from "@upstash/ratelimit";
 import { env } from "process";
 
 export async function POST(req: Request) {
-  // Rate limiting
-  const ip = req.headers.get("x-forwarded-for");
-
   if (env.KV_REST_API_URL && env.KV_REST_API_TOKEN) {
+    // Rate limiting
     const ratelimit = new Ratelimit({
       redis: kv,
       limiter: Ratelimit.slidingWindow(50, "1 d"),
     });
+    const ip = req.headers.get("x-forwarded-for");
 
     const { success, limit, reset, remaining } = await ratelimit.limit(
       `chat_app_ratelimit_${ip}`
