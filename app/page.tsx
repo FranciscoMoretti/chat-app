@@ -32,6 +32,7 @@ import Link from "next/link";
 import { LastMessageSummary } from "@/components/last-message-summary";
 import {
   getConversationLastTimestamp,
+  parsedToObjects,
   sortConversationsByLastMessageDate,
 } from "@/lib/conversations";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -347,19 +348,3 @@ function App() {
 }
 
 export default App;
-function parsedToObjects(parsed: Conversation[]): Conversation[] {
-  return parsed.map((conversation: Conversation) => {
-    return {
-      ...conversation,
-      chat: conversation.chat?.map((item) => {
-        return {
-          ...item,
-          timestamp:
-            typeof item.timestamp === "string"
-              ? new Date(item.timestamp)
-              : item.timestamp,
-        };
-      }),
-    };
-  });
-}

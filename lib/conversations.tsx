@@ -49,3 +49,19 @@ export function clipChatMessagesUpToNTokens(
   }
   return clippedItems;
 }
+export function parsedToObjects(parsed: Conversation[]): Conversation[] {
+  return parsed.map((conversation: Conversation) => {
+    return {
+      ...conversation,
+      chat: conversation.chat?.map((item) => {
+        return {
+          ...item,
+          timestamp:
+            typeof item.timestamp === "string"
+              ? new Date(item.timestamp)
+              : item.timestamp,
+        };
+      }),
+    };
+  });
+}
