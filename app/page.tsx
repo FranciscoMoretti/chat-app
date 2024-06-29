@@ -21,7 +21,6 @@ import {
   MessageSentCallback,
 } from "@nlux/react";
 import "@nlux/themes/nova.css";
-import { conversationStarters } from "@/data/conversation-starters";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/utils";
 import { GithubIcon } from "@/components/github-icon";
@@ -320,7 +319,6 @@ function App() {
               initialConversation={initialConversation}
               displayOptions={{ colorScheme: theme }}
               personaOptions={currentConversation.personas}
-              conversationOptions={{ conversationStarters }}
               events={eventCallbacks}
             />
           </main>
